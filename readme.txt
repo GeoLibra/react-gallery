@@ -1,1 +1,1 @@
-a photo gallery by react
+A photo gallery by react
