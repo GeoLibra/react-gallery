@@ -1,0 +1,51 @@
+html, body {
+  background-color: #222;
+  width: 100%;
+  height: 100%; }
+
+.content {
+  width: 100%;
+  height: 100%; }
+
+/*
+stage
+*/
+.stage {
+  position: relative;
+  width: 100%;
+  height: 680px; }
+
+/**
+image
+ */
+.img-sec {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #ddd; }
+  .img-figure {
+    position: absolute;
+    width: 320px;
+    height: 360px;
+    margin: 0;
+    padding: 40px;
+    box-sizing: border-box;
+    background-color: #fff; }
+  figcaption {
+    text-align: center; }
+    figcaption .img-title {
+      margin: 20px 0 0 0;
+      color: #a7a0a2;
+      font-size: 16px; }
+
+/**
+controller
+ */
+.controller-nav {
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+  z-index: 101;
+  width: 100%;
+  text-align: center; }

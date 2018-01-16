@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import '../styles/main.scss';
+import '../styles/main.css';
 import imageDatas from '../data/imageDatas.json';
 import ImgFigure from './ImgFigure';
 // let genImageUrl=(imageDatasArr)=>{
@@ -25,8 +25,8 @@ class GalleryByReactApp extends Component{
     render(){
         let controllerUnits=[],
             imgFigures=[];
-        imageDatas.forEach((value)=>{
-            imgFigures.push(<ImgFigure data={value}/>);
+        imageData.forEach((value,index)=>{
+            imgFigures.push(<ImgFigure key={index} data={value}/>);
 
         });
         return (
