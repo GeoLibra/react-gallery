@@ -98,7 +98,7 @@ class GalleryByReactApp extends Component{
             }
         });
         //布局两侧的图片
-        for(let i=0,k=imgArrangeArr.length/2;i<k;i++){
+        for(let i=0,j = imgArrangeArr.length, k = j / 2;i<j;i++){
             let hPosRangeLORX=null;
             //前半部分布局左边
             if(i<k){
@@ -141,9 +141,10 @@ class GalleryByReactApp extends Component{
         //计算左侧右侧区域图片排布位置的取值范围
         this.Constant.hPosRange.leftSecX[0]=-halfImgW;
         this.Constant.hPosRange.leftSecX[1]=halfStageW-halfImgW*3;
+
         this.Constant.hPosRange.rightSecX[0]=halfStageW+halfImgW;
         this.Constant.hPosRange.rightSecX[1]=stageW-halfImgW;
-        this.Constant.hPosRange.y[0]=0-halfImgH;
+        this.Constant.hPosRange.y[0]=-halfImgH;
         this.Constant.hPosRange.y[1]=stageH-halfImgH;
 
         //计算上侧区域图片的位置取值范围
