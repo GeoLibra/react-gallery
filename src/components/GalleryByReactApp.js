@@ -27,6 +27,14 @@ let getRangeRandom=(low,high)=>{
     return Math.ceil(Math.random()*(high-low)+low);
 }
 /**
+ * 获取0-30°之间任意一个正负值
+ */
+let get30DegRandom=()=>{
+    let deg=Math.random();
+    return (deg>0.5?'':'-')+Math.ceil(deg*30);
+
+}
+/**
  * scrollWidth 对象的实际内容的宽度 不包含滚动条等边线宽度 会随对象中内容超过可视区域后而变大
  * clientWidth 对象内容的可视区域宽度 不包含滚动条等边线宽度 会随对象显示大小的变化而改变
  * offsetWidth 对象整体的实际宽度 包滚动条等边线 会随对象显示大小的变化而改变
@@ -86,15 +94,20 @@ class GalleryByReactApp extends Component{
             imgsArrangeCenterArr=imgArrangeArr.splice(centerIndex,1);
         //s首先居中centerIndex的图片
         imgsArrangeCenterArr[0].pos=centerPos;
+        //居中的图片不需要旋转
+        imgsArrangeCenterArr[0].rotate=0;
         //取出要布局上侧的图片状态信息
         topImgSpliceIndex=Math.ceil(Math.random()*(imgArrangeArr.length-topImgNum));
         imgsArrangeTopArr=imgArrangeArr.splice(topImgSpliceIndex,topImgNum);
 
         //布局位于上侧的图片
         imgsArrangeTopArr.forEach((value,index)=>{
-            imgsArrangeTopArr[index].pos={
-                top:getRangeRandom(vPosRangeTopY[0],vPosRangeTopY[1]),
-                left:getRangeRandom(vPosRangeX[0],vPosRangeX[1])
+            imgsArrangeTopArr[index]={
+                pos:{
+                    top:getRangeRandom(vPosRangeTopY[0],vPosRangeTopY[1]),
+                    left:getRangeRandom(vPosRangeX[0],vPosRangeX[1])
+                },
+                rotate:get30DegRandom()
             }
         });
         //布局两侧的图片
@@ -106,9 +119,13 @@ class GalleryByReactApp extends Component{
             }else {
                 hPosRangeLORX=hPosRangeRightSecX;
             }
-            imgArrangeArr[i].pos={
-                top:getRangeRandom(hPosRangeY[0],hPosRangeY[1]),
-                left:getRangeRandom(hPosRangeLORX[0],hPosRangeLORX[1])
+            imgArrangeArr[i]={
+                pos:{
+                    top:getRangeRandom(hPosRangeY[0],hPosRangeY[1]),
+                    left:getRangeRandom(hPosRangeLORX[0],hPosRangeLORX[1])
+                },
+                rotate:get30DegRandom()
+
             }
         }
         if(imgsArrangeTopArr&&imgsArrangeTopArr[0]){
@@ -164,7 +181,8 @@ class GalleryByReactApp extends Component{
                     pos:{
                         left:0,
                         top:0
-                    }
+                    },
+                    rotate:0
                 };
             }
             imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>);
