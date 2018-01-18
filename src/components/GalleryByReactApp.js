@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import '../styles/main.css';
 import imageDatas from '../data/imageDatas.json';
 import ImgFigure from './ImgFigure';
+import ControllerUnit from './ControllerUnit';
 // let genImageUrl=(imageDatasArr)=>{
 //     for (let i=0;i<imageDatasArr.length;i++){
 //         let singleImageData=imageDatasArr[i];
@@ -91,7 +92,8 @@ class GalleryByReactApp extends Component{
 
             imgsArrangeTopArr=[],
             //取一个或不取
-            topImgNum=Math.ceil(Math.random()*2),
+            // topImgNum=Math.ceil(Math.random()*2),
+            topImgNum=Math.floor(Math.random()*2),
             topImgSpliceIndex=0,
             //中心图片的状态信息
             imgsArrangeCenterArr=imgArrangeArr.splice(centerIndex,1);
@@ -135,6 +137,7 @@ class GalleryByReactApp extends Component{
                 isCenter:false
             }
         }
+        // debugger;
         if(imgsArrangeTopArr&&imgsArrangeTopArr[0]){
             imgArrangeArr.splice(topImgSpliceIndex,0,imgsArrangeTopArr[0]);
         }
@@ -218,7 +221,7 @@ class GalleryByReactApp extends Component{
 
             }
             imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index).bind(this)} center={this.center(index).bind(this)}/>);
-
+            controllerUnits.push(<ControllerUnit arrange={this.state.imgsArrangeArr[index]} key={index} inverse={this.inverse(index).bind(this)} center={this.center(index).bind(this)}/>);
         });
 
         return (

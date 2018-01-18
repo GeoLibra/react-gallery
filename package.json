@@ -28,5 +28,6 @@
     "node-sass": "^4.7.2",
     "react-app-rewire-less": "^2.1.0",
     "react-app-rewired": "^1.4.0"
-  }
+  },
+  "homepage": "./"
 }

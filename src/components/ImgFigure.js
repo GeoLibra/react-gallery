@@ -25,8 +25,8 @@ class ImgFigure extends Component{
         }
 
         if(this.props.arrange.rotate){
-            ['-moz-','-ms-','-webkit-',''].forEach((value)=>{
-                styleObj['transform']=`rotate(${this.props.arrange.rotate}deg)`;
+            ['MozTransform', 'msTransform', 'WebkitTransform', 'transform'].forEach((value)=>{
+                styleObj[value]=`rotate(${this.props.arrange.rotate}deg)`;
             });
         }
         // 如果是居中的图片， z-index设为11
