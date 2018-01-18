@@ -49,26 +49,29 @@ class GalleryByReactApp extends Component{
                 //     pos:{
                 //         left:'0',
                 //         top:'0'
-                //     }
+                //     },
+                //     rotate:0, //旋转角度
+                //     isInverse:false
                 // }
             ]
         }
-    }
-    Constant= {
-        centerPos: {
-            left: 0,
-            right: 0
-        },
-        hPosRange: {
-            leftSecX: [0, 0],
-            rightSecX: [0, 0],
-            y: [0, 0]
-        },
-        vPosRange: {    // 垂直方向的取值范围
-            x: [0, 0],
-            topY: [0, 0]
+        this.Constant= {
+            centerPos: {
+                left: 0,
+                right: 0
+            },
+            hPosRange: {
+                leftSecX: [0, 0],
+                rightSecX: [0, 0],
+                y: [0, 0]
+            },
+            vPosRange: {    // 垂直方向的取值范围
+                x: [0, 0],
+                topY: [0, 0]
+            }
         }
     }
+
 
     /**
      * 重新布局所有图片
@@ -93,9 +96,12 @@ class GalleryByReactApp extends Component{
             //中心图片的状态信息
             imgsArrangeCenterArr=imgArrangeArr.splice(centerIndex,1);
         //s首先居中centerIndex的图片
-        imgsArrangeCenterArr[0].pos=centerPos;
-        //居中的图片不需要旋转
-        imgsArrangeCenterArr[0].rotate=0;
+        imgsArrangeCenterArr[0]={
+            pos:centerPos,
+            rotate:0,
+            isCenter:true
+        };
+
         //取出要布局上侧的图片状态信息
         topImgSpliceIndex=Math.ceil(Math.random()*(imgArrangeArr.length-topImgNum));
         imgsArrangeTopArr=imgArrangeArr.splice(topImgSpliceIndex,topImgNum);
@@ -107,7 +113,8 @@ class GalleryByReactApp extends Component{
                     top:getRangeRandom(vPosRangeTopY[0],vPosRangeTopY[1]),
                     left:getRangeRandom(vPosRangeX[0],vPosRangeX[1])
                 },
-                rotate:get30DegRandom()
+                rotate:get30DegRandom(),
+                isCenter: false
             }
         });
         //布局两侧的图片
@@ -124,8 +131,8 @@ class GalleryByReactApp extends Component{
                     top:getRangeRandom(hPosRangeY[0],hPosRangeY[1]),
                     left:getRangeRandom(hPosRangeLORX[0],hPosRangeLORX[1])
                 },
-                rotate:get30DegRandom()
-
+                rotate:get30DegRandom(),
+                isCenter:false
             }
         }
         if(imgsArrangeTopArr&&imgsArrangeTopArr[0]){
@@ -135,6 +142,11 @@ class GalleryByReactApp extends Component{
         this.setState({
             imgsArrangeArr:imgArrangeArr
         });
+    }
+    center(index){
+        return ()=>{
+            this.rearrange(index);
+        }
     }
     //组件加载以后  为每张图片计算其位置范围
     componentDidMount(){
@@ -172,6 +184,23 @@ class GalleryByReactApp extends Component{
 
         this.rearrange(0);
     }
+
+    /**
+     * 翻转图片
+     * @param index 输入当前被执行inverse操作的图片对应的图片信息数组的index值
+     * @return {Function} 这是一个闭包函数  其内return一个真正待被执行的函数
+     */
+    inverse(index){
+        return ()=>{
+            let imgsArrangeArr=this.state.imgsArrangeArr;
+            // let imgsArrangeArr=Object.assign({},this.state.imgsArrangeArr);
+            imgsArrangeArr[index].isInverse=!imgsArrangeArr[index].isInverse;
+            this.setState({
+                imgsArrangeArr:imgsArrangeArr
+            });
+        };
+    }
+
     render(){
         let controllerUnits=[],
             imgFigures=[];
@@ -182,12 +211,16 @@ class GalleryByReactApp extends Component{
                         left:0,
                         top:0
                     },
-                    rotate:0
+                    rotate:0,
+                    isInverse: false,
+                    isCenter: false
                 };
+
             }
-            imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>);
+            imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index).bind(this)} center={this.center(index).bind(this)}/>);
 
         });
+
         return (
             <section className="stage" ref="stage">
                 <section className="img-sec">{imgFigures}</section>
