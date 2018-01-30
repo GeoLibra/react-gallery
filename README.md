@@ -1,7 +1,5 @@
 ## 项目概览
 链接：https://luvjia.github.io/react-gallery/ <br />
-
-
 ## 在本地打开项目
 ```bash
 # 在终端执行以下命令安装环境依赖
@@ -37,5 +35,47 @@ git push origin master
 ```bash
 git subtree push --prefix=build origin gh-pages
 ```
-## 项目预览
-地址：https://luvjia.github.io/react-gallery/
+## 使用classnames库处理动态类名
+安装classnames依赖
+```bash
+yarn add classnames --save
+```
+使用方法
+```javascript
+classNames('foo', 'bar'); // => 'foo bar'
+classNames('foo', { bar: true }); // => 'foo bar'
+classNames({ 'foo-bar': true }); // => 'foo-bar'
+classNames({ 'foo-bar': false }); // => ''
+classNames({ foo: true }, { bar: true }); // => 'foo bar'
+classNames({ foo: true, bar: true }); // => 'foo bar'
+```
+如果不使用classnames库，需要这样处理动态类名
+```javascript
+import React, { Component } from 'react';
+class Button extends Component{
+  // ...
+  render () {
+    let btnClass = 'btn';
+    //根据点击的state来控制css
+    if (this.state.isPressed) btnClass += ' btn-pressed';
+    else if (this.state.isHovered) btnClass += ' btn-over';
+    return <button className={btnClass}>{this.props.label}</button>;
+  }
+};
+```
+使用classnames库
+```javascript
+import React, { Component } from 'react';
+import classNames from 'classnames';
+class Button extends Component{
+  // ...
+  render () {
+    const btnClass = classNames({
+          'btn': true,
+          'btn-pressed': this.state.isPressed,
+          'btn-over': !this.state.isPressed && this.state.isHovered
+        });
+    return <button className={btnClass}>{this.props.label}</button>;
+  }
+};
+```
