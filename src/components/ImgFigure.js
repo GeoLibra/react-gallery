@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import classNames from 'classnames';
 class ImgFigure extends Component{
     /**
      *
@@ -33,8 +34,13 @@ class ImgFigure extends Component{
         if(this.props.arrange.isCenter){
             styleObj.zIndex=11;
         }
-        let imgFigureClassName="img-figure";
-        imgFigureClassName+=this.props.arrange.isInverse?' is-inverse' :'';
+        // let imgFigureClassName="img-figure";
+        // imgFigureClassName+=this.props.arrange.isInverse?' is-inverse' :'';
+        //使用classnames库处理动态类名
+        const imgFigureClassName=classNames({
+            'img-figure':true,
+            ' is-inverse':this.props.arrange.isInverse
+        });
         return (
             <figure className={imgFigureClassName} style={styleObj}  onClick={this.handleClick.bind(this)}>
                 <img src={this.props.data.imageUrl} alt={this.props.data.title}/>

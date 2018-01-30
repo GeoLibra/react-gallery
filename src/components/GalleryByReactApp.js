@@ -218,7 +218,6 @@ class GalleryByReactApp extends Component{
                     isInverse: false,
                     isCenter: false
                 };
-
             }
             imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index).bind(this)} center={this.center(index).bind(this)}/>);
             controllerUnits.push(<ControllerUnit arrange={this.state.imgsArrangeArr[index]} key={index} inverse={this.inverse(index).bind(this)} center={this.center(index).bind(this)}/>);
